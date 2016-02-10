@@ -4,28 +4,47 @@ A [Token Bucket](https://en.wikipedia.org/wiki/Token_bucket) based rate limiter 
 
 # Examples
 
-## Blocking RateLimiter.Wait
+## RateLimiter.Wait - Blocking
 
-see [examples/wait_example.go](examples/wait_example.go)
+see [examples_test.go](examples_test.go)
+```go
+// 2 requests per second refreshing 2 capacity every second
+r := ratelimit.NewRateLimiter(time.Second, 2, 2)
+maxDuration := 500 * time.Millisecond
+s := r.WaitMaxDuration(maxDuration)
+fmt.Printf("r.Wait() success[%t]\n", s)
+s = r.WaitMaxDuration(maxDuration)
+fmt.Printf("r.Wait() success[%t]\n", s)
+s = r.WaitMaxDuration(maxDuration)
+fmt.Printf("r.Wait() success[%t]\n", s)
+// Output:
+// r.Wait() success[true]
+// r.Wait() success[true]
+// r.Wait() success[false]
+
+```
+
+## RateLimiter.Wait - Blocking
+
+see [examples_test.go](examples_test.go)
 ```go
 // 2 requests per second refreshing 2 capacity every second
 r := ratelimit.NewRateLimiter(time.Second, 2, 2)
 start := time.Now()
 r.Wait()
-fmt.Printf("r.Wait() elapsed[%s] time[%s]\n", time.Now().Sub(start), time.Now())
+fmt.Printf("r.Wait() elapsed less than 500 ms [%t]\n", time.Now().Sub(start) < 500*time.Millisecond)
 r.Wait()
-fmt.Printf("r.Wait() elapsed[%s] time[%s]\n", time.Now().Sub(start), time.Now())
+fmt.Printf("r.Wait() elapsed less than 500 ms [%t]\n", time.Now().Sub(start) < 500*time.Millisecond)
 r.Wait()
-fmt.Printf("r.Wait() elapsed[%s] time[%s]\n", time.Now().Sub(start), time.Now())
+fmt.Printf("r.Wait() elapsed greater than 500 ms [%t]\n", time.Now().Sub(start) > 500*time.Millisecond)
+// Output:
+// r.Wait() elapsed less than 500 ms [true]
+// r.Wait() elapsed less than 500 ms [true]
+// r.Wait() elapsed greater than 500 ms [true]
 
 ```
 
-```bash
-$ go run examples/wait_example.go
-r.Wait() duration[25.783µs] time[2016-02-09 19:01:05.397723074 -0600 CST]
-r.Wait() duration[265.595µs] time[2016-02-09 19:01:05.397962943 -0600 CST]
-r.Wait() duration[1.002628384s] time[2016-02-09 19:01:06.400325702 -0600 CST]
-```
+
 
 # Contributing
 See [Contributing](Contributing.md)

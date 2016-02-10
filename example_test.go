@@ -37,17 +37,3 @@ func ExampleRateLimiter_WaitMaxDuration() {
 	// r.Wait() success[true]
 	// r.Wait() success[false]
 }
-
-func ExampleRateLimiter_Try() {
-	// 2 requests per second refreshing 2 capacity every second
-	r := ratelimit.NewRateLimiter(time.Second, 2, 2)
-	s := r.Try()
-	fmt.Printf("r.Try() success[%t]\n", s)
-	s = r.Try()
-	fmt.Printf("r.Try() success[%t]\n", s)
-	s = r.Try()
-	fmt.Printf("r.Try() success[%t]\n", s)
-	// Output: r.Try() success[true]
-	// r.Try() success[true]
-	// r.Try() success[false]
-}

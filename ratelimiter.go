@@ -13,6 +13,7 @@ type RateLimiter struct {
 	remaining     int64
 	intervalStart time.Time
 	resetAt       time.Time
+
 	// channels
 	requestToken chan struct{}
 	updateLimits chan updateLimit
@@ -50,15 +51,6 @@ func (r *RateLimiter) WaitMaxDuration(duration time.Duration) bool {
 	case r.requestToken <- struct{}{}:
 		return true
 	case <-time.After(duration):
-		return false
-	}
-}
-
-func (r *RateLimiter) Try() bool {
-	select {
-	case r.requestToken <- struct{}{}:
-		return true
-	default:
 		return false
 	}
 }
