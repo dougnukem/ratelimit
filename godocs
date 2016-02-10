@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -e
+
+DOCSOUT="build/godocs"
+
+mkdir -p "${DOCSOUT}"
+
+godoc -html -q github.com/dougnukem/ratelimit > "${DOCSOUT}/index.html"
+
+open "${DOCSOUT}/index.html"
