@@ -1,6 +1,7 @@
-package ratelimit
+package ratelimit_test
 
 import (
+	"github.com/dougnukem/ratelimit"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
@@ -22,7 +23,7 @@ var testTimeout = testInterval * 4
 
 func TestRateLimiter_Wait(t *testing.T) {
 
-	r := NewRateLimiter(testInterval, 2, 2)
+	r := ratelimit.NewRateLimiter(testInterval, 2, 2)
 	start := time.Now()
 	var end time.Time
 	completed := make(chan struct{})
