@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -e
+
+COVEROUT="coverage"
+
+mkdir -p "${COVEROUT}"
+
+go test -v -coverprofile=${COVEROUT}/ratelimit.out ./
+
+go tool cover -html=${COVEROUT}/ratelimit.out
