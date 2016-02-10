@@ -6,7 +6,7 @@ A [Token Bucket](https://en.wikipedia.org/wiki/Token_bucket) based rate limiter 
 
 ## RateLimiter.Wait - Blocking
 
-see [examples_test.go](examples_test.go)
+see [example-RateLimiter-WaitMaxDuration](https://godoc.org/github.com/dougnukem/ratelimit#example-RateLimiter-WaitMaxDuration)
 ```go
 // 2 requests per second refreshing 2 capacity every second
 r := ratelimit.NewRateLimiter(time.Second, 2, 2)
@@ -26,7 +26,7 @@ fmt.Printf("r.Wait() success[%t]\n", s)
 
 ## RateLimiter.Wait - Blocking
 
-see [examples_test.go](examples_test.go)
+see [example-RateLimiter-Wait](https://godoc.org/github.com/dougnukem/ratelimit#example-RateLimiter-Wait)
 ```go
 // 2 requests per second refreshing 2 capacity every second
 r := ratelimit.NewRateLimiter(time.Second, 2, 2)
